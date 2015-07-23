@@ -1,0 +1,24 @@
+{
+  "name": "react-refresh-indicator",
+  "version": "1.0.0",
+  "description": "react refresh indicator",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maoziliang/react-refresh-indicator.git"
+  },
+  "keywords": [
+    "react",
+    "refresh",
+    "indicator"
+  ],
+  "author": "maoziliang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maoziliang/react-refresh-indicator/issues"
+  },
+  "homepage": "https://github.com/maoziliang/react-refresh-indicator#readme"
+}
