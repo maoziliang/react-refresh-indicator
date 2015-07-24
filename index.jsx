@@ -154,8 +154,7 @@ class RefreshIndicator extends React.Component {
 
     const triangleCx = originX + radius;
     const triangleCy = originY;
-    const dx = circleStroke * 7 / 4;
-    dx = dx * p1;
+    const dx = (circleStroke * 7 / 4) * p1;
     const trianglePath = (triangleCx - dx) + ',' + triangleCy + ' ' + (triangleCx + dx) + ',' + triangleCy + ' ' + triangleCx + ',' + (triangleCy + dx);
 
     const [, endDeg] = this._getArcDeg();
