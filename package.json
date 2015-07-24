@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/maoziliang/react-refresh-indicator/issues"
   },
-  "homepage": "https://github.com/maoziliang/react-refresh-indicator#readme"
+  "homepage": "https://github.com/maoziliang/react-refresh-indicator#readme",
+  "devDependencies": {
+    "babel-eslint": "^3.1.26",
+    "eslint-plugin-react": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^0.15.0"
+  }
 }
