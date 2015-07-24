@@ -34,18 +34,19 @@ class RefreshIndicator extends React.Component {
   _getRootStyle() {
     let padding = this._getPaddingSize();
     return {
-      width: this.props.size + "px",
-      height: this.props.size + "px",
+      width: this.props.size,
+      height: this.props.size,
       padding: padding,
       top: this.props.top,
       left: this.props.left,
-      opacity: this.props.transitionEnabled ? 0 : 1,
-      [this.prefixed("transition")]: this.props.transitionEnabled ? 'all .2s ease-out' : 'none',
+      opacity: this.props.status === "hide" ? 0 : 1,
+      [this.prefixed("transition")]: this.props.status === "hide" ? 'all .3s ease-out' : 'none',
     };
   }
 
   _getCircleStyle(paperSize) {
-    let p1 = this.props.loading ? 1 : this._getFactor();
+    let isLoading = this.props.status === "loading";
+    let p1 = isLoading ? 1 : this._getFactor();
     let radius = this._getRadius(paperSize);
     let stroke = Math.max(3, this.props.size * 4 / 80);
     let originX = paperSize / 2;
@@ -60,7 +61,7 @@ class RefreshIndicator extends React.Component {
       style: {
         strokeDasharray: arcLen + ", " + (perimeter - arcLen),
         strokeDashoffset: dashOffset,
-        stroke: (this.props.loading || this.props.percentage === 100) ? "rgb(0, 188, 212)" : "#CCC",
+        stroke: (isLoading || this.props.percentage === 100) ? "rgb(0, 188, 212)" : "#CCC",
         strokeLinecap: "round",
         opacity: p1,
         strokeWidth: stroke * p1,
@@ -109,7 +110,7 @@ class RefreshIndicator extends React.Component {
   }
 
   _scalePath(path, step) {
-    if (!this.props.loading) return;
+    if (this.props.status !== "loading") return;
 
     step = step || 0;
     step %= 3;
@@ -140,7 +141,7 @@ class RefreshIndicator extends React.Component {
   }
 
   _rotateWrapper(wrapper) {
-    if (!this.props.loading) return;
+    if (this.props.status !== "loading") return;
 
     clearTimeout(this._timer2);
     this._timer2= setTimeout(this._rotateWrapper.bind(this, wrapper), 10050);
@@ -166,7 +167,7 @@ class RefreshIndicator extends React.Component {
 
   _renderChildren() {
     let paperSize = this._getPaperSize();
-    if (this.props.loading) {
+    if (this.props.status !== "ready") {
       let circleStyle = this._getCircleStyle(paperSize);
       return (
         <div ref="wrapper" style={{
@@ -229,17 +230,15 @@ class RefreshIndicator extends React.Component {
 
 RefreshIndicator.propTypes = {
   size: React.PropTypes.number,
-  percentage: React.PropTypes.number.isRequired,
+  percentage: React.PropTypes.number,
   left: React.PropTypes.number.isRequired,
   top: React.PropTypes.number.isRequired,
-  loading: React.PropTypes.bool,
-  transitionEnabled: React.PropTypes.bool
+  status: React.PropTypes.oneOf(['ready', 'loading', 'hide']).isRequired,
 };
 
 RefreshIndicator.defaultProps = {
   size: 60,
-  loading: false,
-  transitionEnabled: false
+  percentage: 0
 };
 
 export default RefreshIndicator;
