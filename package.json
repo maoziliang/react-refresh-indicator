@@ -2,7 +2,7 @@
   "name": "react-refresh-indicator",
   "version": "1.0.0",
   "description": "react refresh indicator",
-  "main": "index.jsx",
+  "main": "lib/index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
