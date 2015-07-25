@@ -3,6 +3,10 @@ import React from 'react';
 import './index.less';
 
 class RefreshIndicator extends React.Component {
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
   componentDidUpdate() {
     this._scalePath(React.findDOMNode(this.refs.path), 0);
     this._rotateWrapper(React.findDOMNode(this.refs.wrapper));
