@@ -7,3 +7,5 @@
 An indicator implement material ui style.
 
 Written in ES6. May be you should use this package with webpack + babel + babel-runtime.
+
+[Docs](http://maoziliang.github.io/react-refresh-indicator/)
