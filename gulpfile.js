@@ -4,13 +4,13 @@ var gulp = require('gulp'),
 
 gulp.task('eslint', function () {
   gulp.src([
-    '*.jsx',
+    'lib/*.jsx',
   ]).pipe(eslint(__dirname + '/.eslint.json'))
     .pipe(eslint.format());
 });
 
 gulp.task('lesslint', function () {
-  gulp.src('./index.less')
+  gulp.src('lib/*.less')
     .pipe(recess())
     .pipe(recess.reporter());
 });

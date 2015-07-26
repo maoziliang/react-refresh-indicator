@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Refresh indicator in material design | React</title>
+  <meta name="viewport" content="width=device-width">
+  <meta property="og:title" content="Refresh indicator in material design | React">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="React refresh indicator">
+
+  <link rel="stylesheet" href="/react-refresh-indicator/css/syntax.css">
+  <link rel="stylesheet" href="/react-refresh-indicator/css/codemirror.css">
+  <link rel="stylesheet" href="/react-refresh-indicator/css/react.css">
+
+  <!--[if lte IE 8]>
+  <script src="/react-refresh-indicator/js/html5shiv.min.js"></script>
+  <script src="/react-refresh-indicator/js/es5-shim.min.js"></script>
+  <script src="/react-refresh-indicator/js/es5-sham.min.js"></script>
+  <![endif]-->
+  <script src="/react-refresh-indicator/js/codemirror.js"></script>
+  <script src="/react-refresh-indicator/js/javascript.js"></script>
+  <script src="/react-refresh-indicator/js/react.js"></script>
+  <script src="/react-refresh-indicator/js/JSXTransformer.js"></script>
+  <script src="/react-refresh-indicator/js/live_editor.js"></script>
+  <script src="/react-refresh-indicator/js/react-refresh-indicator.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    
+    <div class="hero">
+      <div class="wrap">
+        <div class="text"><strong>RefreshIndicator</strong></div>
+        <div class="minitext">
+          Refresh indicator in material design
+        </div>
+        <div id="indicator" style="width: 100px; margin: 0 auto; position: relative;"></div>
+      </div>
+    </div>
+    
+
+    <section class="content wrap">
+  <p><a class="github-button" href="https://github.com/maoziliang/react-refresh-indicator" data-icon="octicon-star" data-style="mega" data-count-href="/maoziliang/react-refresh-indicator/stargazers" data-count-api="/repos/maoziliang/react-refresh-indicator#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star maoziliang/react-refresh-indicator on GitHub">Star</a>
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script></p>
+<h2><a class="anchor" name="usage"></a>Usage <a class="hash-link" href="#usage">#</a></h2>
+<p>This package is written in ES6. May be you should use this package with webpack + babel + babel-runtime.</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm install react-refresh-indicator --save
+</code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">RefreshIndicator</span><span class="p">.</span><span class="nx">propsType</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="c1">// size in pixel</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PropTypes</span><span class="p">.</span><span class="nx">number</span><span class="p">,</span>
+  <span class="c1">// percentage is 100 always means the user comfirm to reload.</span>
+  <span class="nx">percentage</span><span class="o">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PropTypes</span><span class="p">.</span><span class="nx">number</span><span class="p">,</span>
+  <span class="c1">// RefreshIndicator position is absolute. Please give a correct positioned container.</span>
+  <span class="nx">left</span><span class="o">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PropTypes</span><span class="p">.</span><span class="nx">number</span><span class="p">.</span><span class="nx">isRequired</span><span class="p">,</span>
+  <span class="nx">top</span><span class="o">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PropTypes</span><span class="p">.</span><span class="nx">number</span><span class="p">.</span><span class="nx">isRequired</span><span class="p">,</span>
+  <span class="c1">// status is an enum. It can be &quot;ready&quot; &quot;loading&quot; or &quot;hide&quot;</span>
+  <span class="c1">// ready: This phase give user a change to confirm to fetch data. Display upon the percentage prop.</span>
+  <span class="c1">// loading: This means data fetch has began. Display a spinning animated arc.</span>
+  <span class="c1">// hide: Finished and hide to specified left and top with animation.</span>
+  <span class="nx">status</span><span class="o">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">PropTypes</span><span class="p">.</span><span class="nx">oneOf</span><span class="p">([</span><span class="s2">&quot;ready&quot;</span><span class="p">,</span> <span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;hide&quot;</span><span class="p">]).</span><span class="nx">isRequired</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">RefreshIndicator</span><span class="p">.</span><span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">size</span><span class="o">:</span> <span class="mi">60</span><span class="p">,</span>
+  <span class="nx">percentage</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div><h2><a class="anchor" name="examples"></a>Examples <a class="hash-link" href="#examples">#</a></h2>
+<p><section class="home-section">
+  <div id="examples">
+    <div class="example">
+      <h3>A static state indicator</h3>
+      <p>
+        Render <strong>RefreshIndicator</strong> directly. You can modify the props of the component to see the change.
+      </p>
+      <p>
+        <strong>JSX is optional and not required to use React.</strong> Try
+        clicking on &quot;Compiled JS&quot; to see the raw JavaScript code produced by
+        the JSX compiler.
+      </p>
+      <div id="sample1"></div>
+    </div>
+    <div class="example">
+      <h3>A complete and complex example</h3>
+      <p>
+        You can press down your mouse within the right side box. Then move down. And then release. That&#39;s all.
+      </p>
+      <div id="sample2"></div>
+    </div>
+  </div>
+  <script src="/react-refresh-indicator/js/examples/sample1.js"></script>
+  <script src="/react-refresh-indicator/js/examples/sample2.js"></script>
+</section></p>
+
+</section>
+
+  </div>
+  <div id="fb-root"></div>
+
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  try {
+  var pageTracker = _gat._getTracker("UA-65603763-1");
+  pageTracker._trackPageview();
+  } catch(err) {}
+  </script>
+</body>
+</html>

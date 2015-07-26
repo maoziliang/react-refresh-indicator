@@ -5,3 +5,5 @@
 [![Travis branch](https://img.shields.io/travis/maoziliang/react-refresh-indicator/master.svg)](https://travis-ci.org/maoziliang/react-refresh-indicator)
 
 An indicator implement material ui style.
+
+Written in ES6. May be you should use this package with webpack + babel + babel-runtime.

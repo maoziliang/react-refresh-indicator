@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{{ page.title }} | React</title>
+  <meta name="viewport" content="width=device-width">
+  <meta property="og:title" content="{{ page.title }} | React">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="React refresh indicator">
+
+  <link rel="stylesheet" href="/react-refresh-indicator/css/syntax.css">
+  <link rel="stylesheet" href="/react-refresh-indicator/css/codemirror.css">
+  <link rel="stylesheet" href="/react-refresh-indicator/css/react.css">
+
+  <!--[if lte IE 8]>
+  <script src="/react-refresh-indicator/js/html5shiv.min.js"></script>
+  <script src="/react-refresh-indicator/js/es5-shim.min.js"></script>
+  <script src="/react-refresh-indicator/js/es5-sham.min.js"></script>
+  <![endif]-->
+  <script src="/react-refresh-indicator/js/codemirror.js"></script>
+  <script src="/react-refresh-indicator/js/javascript.js"></script>
+  <script src="/react-refresh-indicator/js/react.js"></script>
+  <script src="/react-refresh-indicator/js/JSXTransformer.js"></script>
+  <script src="/react-refresh-indicator/js/live_editor.js"></script>
+  <script src="/react-refresh-indicator/js/react-refresh-indicator.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    {% if page.id == 'home' %}
+    <div class="hero">
+      <div class="wrap">
+        <div class="text"><strong>RefreshIndicator</strong></div>
+        <div class="minitext">
+          {{ page.title }}
+        </div>
+        <div id="indicator" style="width: 100px; margin: 0 auto; position: relative;"></div>
+      </div>
+    </div>
+    {% endif %}
+
+    {{ content }}
+  </div>
+  <div id="fb-root"></div>
+
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  try {
+  var pageTracker = _gat._getTracker("UA-65603763-1");
+  pageTracker._trackPageview();
+  } catch(err) {}
+  </script>
+</body>
+</html>
