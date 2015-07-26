@@ -11,6 +11,7 @@
     "url": "git+https://github.com/maoziliang/react-refresh-indicator.git"
   },
   "keywords": [
+    "react-component",
     "react",
     "refresh",
     "indicator"
