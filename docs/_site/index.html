@@ -45,8 +45,14 @@
     <section class="content wrap">
   <p><a class="github-button" href="https://github.com/maoziliang/react-refresh-indicator" data-icon="octicon-star" data-style="mega" data-count-href="/maoziliang/react-refresh-indicator/stargazers" data-count-api="/repos/maoziliang/react-refresh-indicator#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star maoziliang/react-refresh-indicator on GitHub">Star</a>
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script></p>
+
+<p><a href="https://david-dm.org/maoziliang/react-refresh-indicator"><img src="https://img.shields.io/david/maoziliang/react-refresh-indicator.svg" alt="David"></a>
+<a href="https://david-dm.org/maoziliang/react-refresh-indicator#info=devDependencies"><img src="https://img.shields.io/david/dev/maoziliang/react-refresh-indicator.svg" alt="David"></a>
+<a href="https://travis-ci.org/maoziliang/react-refresh-indicator"><img src="https://img.shields.io/travis/maoziliang/react-refresh-indicator/master.svg" alt="Travis branch"></a></p>
 <h2><a class="anchor" name="usage"></a>Usage <a class="hash-link" href="#usage">#</a></h2>
-<p>This package is written in ES6. May be you should use this package with webpack + babel + babel-runtime.</p>
+<p>This package is written in ES6. Maybe you should use this package with <strong>webpack + babel + babel-runtime</strong>.</p>
+
+<p>Perhaps you should overwrite <code>prefixed</code> method of this component by mixin to implement the autoprefix feature. The default behaviour will not autoprefix for css3 property name.</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm install react-refresh-indicator --save
 </code></pre></div><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">RefreshIndicator</span><span class="p">.</span><span class="nx">propsType</span> <span class="o">=</span> <span class="p">{</span>
   <span class="c1">// size in pixel</span>
@@ -68,7 +74,7 @@
   <span class="nx">percentage</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">};</span>
 </code></pre></div><h2><a class="anchor" name="examples"></a>Examples <a class="hash-link" href="#examples">#</a></h2>
-<p><section class="home-section">
+<section class="home-section">
   <div id="examples">
     <div class="example">
       <h3>A static state indicator</h3>
@@ -77,7 +83,7 @@
       </p>
       <p>
         <strong>JSX is optional and not required to use React.</strong> Try
-        clicking on &quot;Compiled JS&quot; to see the raw JavaScript code produced by
+        clicking on "Compiled JS" to see the raw JavaScript code produced by
         the JSX compiler.
       </p>
       <div id="sample1"></div>
@@ -85,14 +91,14 @@
     <div class="example">
       <h3>A complete and complex example</h3>
       <p>
-        You can press down your mouse within the right side box. Then move down. And then release. That&#39;s all.
+        You can press down your mouse within the right side box. Then move down. And then release. That's all.
       </p>
       <div id="sample2"></div>
     </div>
   </div>
   <script src="/react-refresh-indicator/js/examples/sample1.js"></script>
   <script src="/react-refresh-indicator/js/examples/sample2.js"></script>
-</section></p>
+</section>
 
 </section>
 

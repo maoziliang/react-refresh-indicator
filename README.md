@@ -6,6 +6,8 @@
 
 An indicator implement material ui style.
 
-Written in ES6. May be you should use this package with webpack + babel + babel-runtime.
+Written in ES6. Maybe you should use this package with webpack + babel + babel-runtime.
+
+Perhaps you should overwrite `prefixed` method of this component by mixin to implement the autoprefix feature. The default behaviour will not autoprefix for css3 property name.
 
 [Docs](http://maoziliang.github.io/react-refresh-indicator/)

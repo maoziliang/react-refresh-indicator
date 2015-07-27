@@ -7,8 +7,14 @@ id: home
 <a class="github-button" href="https://github.com/maoziliang/react-refresh-indicator" data-icon="octicon-star" data-style="mega" data-count-href="/maoziliang/react-refresh-indicator/stargazers" data-count-api="/repos/maoziliang/react-refresh-indicator#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star maoziliang/react-refresh-indicator on GitHub">Star</a>
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 
+[![David](https://img.shields.io/david/maoziliang/react-refresh-indicator.svg)](https://david-dm.org/maoziliang/react-refresh-indicator)
+[![David](https://img.shields.io/david/dev/maoziliang/react-refresh-indicator.svg)](https://david-dm.org/maoziliang/react-refresh-indicator#info=devDependencies)
+[![Travis branch](https://img.shields.io/travis/maoziliang/react-refresh-indicator/master.svg)](https://travis-ci.org/maoziliang/react-refresh-indicator)
+
 ## Usage
-This package is written in ES6. May be you should use this package with webpack + babel + babel-runtime.
+This package is written in ES6. Maybe you should use this package with **webpack + babel + babel-runtime**.
+
+Perhaps you should overwrite `prefixed` method of this component by mixin to implement the autoprefix feature. The default behaviour will not autoprefix for css3 property name.
 
 ``` bash
 $ npm install react-refresh-indicator --save
