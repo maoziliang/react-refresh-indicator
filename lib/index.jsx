@@ -3,15 +3,6 @@ import React from 'react';
 import './index.less';
 
 class RefreshIndicator extends React.Component {
-  componentDidMount() {
-    this.componentDidUpdate();
-  }
-
-  componentDidUpdate() {
-    this._scalePath(React.findDOMNode(this.refs.path), 0);
-    this._rotateWrapper(React.findDOMNode(this.refs.wrapper));
-  }
-
   render() {
     const rootStyle = this._getRootStyle();
     return (
@@ -31,7 +22,9 @@ class RefreshIndicator extends React.Component {
     if (this.props.status !== 'ready') {
       const circleStyle = this._getCircleStyle(paperSize);
       childrenCmp = (
-        <div ref="wrapper" style={{
+        <div className={ this.props.status === "loading" ? "loading-div-anim" : null }
+          ref="wrapper" 
+          style={{
             transition: 'transform 20s linear',
             width: '100%',
             height: '100%',
@@ -42,10 +35,9 @@ class RefreshIndicator extends React.Component {
               height: paperSize,
             }}
           >
-            <circle ref="path"
-              style={Object.assign(circleStyle.style, {
-                transition: 'all 1.5s ease-in-out',
-              })}
+            <circle className={ this.props.status === "loading" ? "circle-anim" : null }
+              ref="path"
+              style={circleStyle.style}
               {...circleStyle.attr}
             />
           </svg>

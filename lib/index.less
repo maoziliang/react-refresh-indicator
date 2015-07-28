@@ -9,3 +9,43 @@
 
   box-sizing: border-box;
 };
+
+@keyframes circle-scale {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  46.875% {
+    stroke-dasharray: 44, 200;
+    stroke-dashoffset: -15;
+  }
+
+  100% {
+    stroke-dasharray: 44, 200;
+    stroke-dashoffset: -68;
+  }
+}
+
+@keyframes rotate-div {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-div-anim {
+  .circle-anim {
+    animation-name: circle-scale;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1600ms;
+    animation-iteration-count: infinite;
+  }
+
+  animation-name: rotate-div;
+  animation-timing-function: linear;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
