@@ -110,8 +110,7 @@ class RefreshIndicator extends React.Component {
       width: this.props.size,
       height: this.props.size,
       padding: padding,
-      top: this.props.top,
-      left: this.props.left,
+      transform: `translate3d(${1000 + this.props.left}px, ${1000 + this.props.top}px, 0) scale(${this.props.size / 40})`,
       opacity: this.props.status === 'hide' ? 0 : 1,
       [this.prefixed('transition')]: this.props.status === 'hide' ? 'all .3s ease-out' : 'none',
     };
@@ -175,52 +174,6 @@ class RefreshIndicator extends React.Component {
       },
     };
   }
-
-  _scalePath(path, step) {
-    if (this.props.status !== 'loading') return;
-
-    const currStep = (step || 0) % 3;
-
-    clearTimeout(this._timer1);
-    this._timer1 = setTimeout(this._scalePath.bind(this, path, currStep + 1), currStep ? 750 : 250);
-
-    const paperSize = this._getPaperSize();
-    const radius = this._getRadius(paperSize);
-    const perimeter = Math.PI * 2 * radius;
-    const arcLen = perimeter * 0.64;
-
-    if (currStep === 0) {
-      path.style.strokeDasharray = '1, 200';
-      path.style.strokeDashoffset = 0;
-      path.style[this.prefixed('transitionDuration')] = '0ms';
-    } else if (currStep === 1) {
-      path.style.strokeDasharray = arcLen + ', 200';
-      path.style.strokeDashoffset = -15;
-      path.style[this.prefixed('transitionDuration')] = '750ms';
-    } else {
-      path.style.strokeDasharray = arcLen + ',200';
-      path.style.strokeDashoffset = -(perimeter - 1);
-      path.style[this.prefixed('transitionDuration')] = '850ms';
-    }
-  }
-
-  _rotateWrapper(wrapper) {
-    if (this.props.status !== 'loading') return;
-
-    clearTimeout(this._timer2);
-    this._timer2 = setTimeout(this._rotateWrapper.bind(this, wrapper), 10050);
-
-    wrapper.style[this.prefixed('transform')] = null;
-    wrapper.style[this.prefixed('transform')] = 'rotate(0deg)';
-    wrapper.style[this.prefixed('transitionDuration')] = '0ms';
-
-    setTimeout(() => {
-      wrapper.style[this.prefixed('transform')] = 'rotate(1800deg)';
-      wrapper.style[this.prefixed('transitionDuration')] = '10s';
-      wrapper.style[this.prefixed('transitionTimingFunction')] = 'linear';
-    }, 50);
-  }
-
 
   /**
    * 原值返回，因为很多库都依赖不同的autoprefixer的实现
