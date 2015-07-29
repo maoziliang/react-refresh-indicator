@@ -36,16 +36,21 @@
   }
 }
 
-.loading-div-anim {
+.loading-div {
+  width: 100%;
+  height: 100%;
+
   .circle-anim {
     animation-duration: 1600ms;
     animation-iteration-count: infinite;
     animation-name: circle-scale;
-    animation-timing-function: ease-in-out;
+    animation-timing-function: linear;
   }
 
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-name: rotate-div;
-  animation-timing-function: linear;
+  &.anim {
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: rotate-div;
+    animation-timing-function: linear;
+  }
 }

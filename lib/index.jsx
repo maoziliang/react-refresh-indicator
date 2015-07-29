@@ -2,6 +2,8 @@ import React from 'react';
 
 import './index.less';
 
+const VIEWBOX_SIZE = 32;
+
 class RefreshIndicator extends React.Component {
   render() {
     const rootStyle = this._getRootStyle();
@@ -22,18 +24,14 @@ class RefreshIndicator extends React.Component {
     if (this.props.status !== 'ready') {
       const circleStyle = this._getCircleStyle(paperSize);
       childrenCmp = (
-        <div className={ this.props.status === 'loading' ? 'loading-div-anim' : null }
+        <div className={ 'loading-div' + (this.props.status === 'loading' ? ' anim' : '') }
           ref="wrapper"
-          style={{
-            transition: 'transform 20s linear',
-            width: '100%',
-            height: '100%',
-          }}
         >
           <svg style={{
               width: paperSize,
               height: paperSize,
             }}
+            viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
           >
             <circle className={ this.props.status === 'loading' ? 'circle-anim' : null }
               ref="path"
@@ -51,6 +49,7 @@ class RefreshIndicator extends React.Component {
             width: paperSize,
             height: paperSize,
           }}
+          viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`}
         >
           <circle
             style={circleStyle.style}
@@ -77,8 +76,8 @@ class RefreshIndicator extends React.Component {
     return this.props.size - this._getPaddingSize() * 2;
   }
 
-  _getRadius(paperSize) {
-    return paperSize / 2 - 5;
+  _getRadius() {
+    return VIEWBOX_SIZE / 2 - 5;
   }
 
   _getArcDeg() {
@@ -102,19 +101,19 @@ class RefreshIndicator extends React.Component {
       width: this.props.size,
       height: this.props.size,
       padding: padding,
-      transform: `translate3d(${1000 + this.props.left}px, ${1000 + this.props.top}px, 0) scale(${this.props.size / 40})`,
+      transform: `translate3d(${1000 + this.props.left}px, ${1000 + this.props.top}px, 0)`,
       opacity: this.props.status === 'hide' ? 0 : 1,
       [this.prefixed('transition')]: this.props.status === 'hide' ? 'all .3s ease-out' : 'none',
     };
   }
 
-  _getCircleStyle(paperSize) {
+  _getCircleStyle() {
     const isLoading = this.props.status === 'loading';
     const p1 = isLoading ? 1 : this._getFactor();
-    const radius = this._getRadius(paperSize);
-    const stroke = Math.max(3, this.props.size * 4 / 80);
-    const originX = paperSize / 2;
-    const originY = paperSize / 2;
+    const radius = this._getRadius();
+    const stroke = Math.max(3, 2);
+    const originX = VIEWBOX_SIZE / 2;
+    const originY = VIEWBOX_SIZE / 2;
     const perimeter = Math.PI * 2 * radius;
 
     const [beginDeg, endDeg] = this._getArcDeg();
@@ -139,13 +138,14 @@ class RefreshIndicator extends React.Component {
     };
   }
 
-  _getPolygonStyle(paperSize) {
+  _getPolygonStyle() {
+    const paperSize = 32;
     const p1 = this._getFactor();
-    const radius = this._getRadius(paperSize);
+    const radius = this._getRadius();
 
-    const circleStroke = Math.max(3, this.props.size * 4 / 80);
-    const originX = paperSize / 2;
-    const originY = paperSize / 2;
+    const circleStroke = Math.max(3, 40 * 4 / 80);
+    const originX = VIEWBOX_SIZE / 2;
+    const originY = VIEWBOX_SIZE / 2;
 
     const triangleCx = originX + radius;
     const triangleCy = originY;
