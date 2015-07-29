@@ -54,21 +54,19 @@ var RefreshIndicator =
 
 	'use strict';
 
-	var _get = __webpack_require__(2)['default'];
+	var _get = __webpack_require__(11)['default'];
 
-	var _inherits = __webpack_require__(10)['default'];
+	var _inherits = __webpack_require__(16)['default'];
 
-	var _createClass = __webpack_require__(19)['default'];
+	var _createClass = __webpack_require__(25)['default'];
 
-	var _classCallCheck = __webpack_require__(22)['default'];
+	var _classCallCheck = __webpack_require__(28)['default'];
 
-	var _defineProperty = __webpack_require__(23)['default'];
+	var _defineProperty = __webpack_require__(29)['default'];
 
-	var _extends = __webpack_require__(24)['default'];
+	var _extends = __webpack_require__(2)['default'];
 
 	var _slicedToArray = __webpack_require__(30)['default'];
-
-	var _Object$assign = __webpack_require__(25)['default'];
 
 	var _interopRequireDefault = __webpack_require__(48)['default'];
 
@@ -82,6 +80,8 @@ var RefreshIndicator =
 
 	__webpack_require__(50);
 
+	var VIEWBOX_SIZE = 32;
+
 	var RefreshIndicator = (function (_React$Component) {
 	  _inherits(RefreshIndicator, _React$Component);
 
@@ -92,17 +92,6 @@ var RefreshIndicator =
 	  }
 
 	  _createClass(RefreshIndicator, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.componentDidUpdate();
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      this._scalePath(_react2['default'].findDOMNode(this.refs.path), 0);
-	      this._rotateWrapper(_react2['default'].findDOMNode(this.refs.wrapper));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var rootStyle = this._getRootStyle();
@@ -125,23 +114,20 @@ var RefreshIndicator =
 	        var circleStyle = this._getCircleStyle(paperSize);
 	        childrenCmp = _react2['default'].createElement(
 	          'div',
-	          { ref: "wrapper", style: {
-	              transition: 'transform 20s linear',
-	              width: '100%',
-	              height: '100%'
-	            }
+	          { className: 'loading-div' + (this.props.status === 'loading' ? ' anim' : ''),
+	            ref: "wrapper"
 	          },
 	          _react2['default'].createElement(
 	            'svg',
 	            { style: {
 	                width: paperSize,
 	                height: paperSize
-	              }
+	              },
+	              viewBox: '0 0 ' + VIEWBOX_SIZE + ' ' + VIEWBOX_SIZE
 	            },
-	            _react2['default'].createElement('circle', _extends({ ref: "path",
-	              style: _Object$assign(circleStyle.style, {
-	                transition: 'all 1.5s ease-in-out'
-	              })
+	            _react2['default'].createElement('circle', _extends({ className: this.props.status === 'loading' ? 'circle-anim' : null,
+	              ref: "path",
+	              style: circleStyle.style
 	            }, circleStyle.attr))
 	          )
 	        );
@@ -153,7 +139,8 @@ var RefreshIndicator =
 	          { style: {
 	              width: paperSize,
 	              height: paperSize
-	            }
+	            },
+	            viewBox: '0 0 ' + VIEWBOX_SIZE + ' ' + VIEWBOX_SIZE
 	          },
 	          _react2['default'].createElement('circle', _extends({
 	            style: circleStyle.style
@@ -179,8 +166,8 @@ var RefreshIndicator =
 	    }
 	  }, {
 	    key: '_getRadius',
-	    value: function _getRadius(paperSize) {
-	      return paperSize / 2 - 5;
+	    value: function _getRadius() {
+	      return VIEWBOX_SIZE / 2 - 5;
 	    }
 	  }, {
 	    key: '_getArcDeg',
@@ -207,20 +194,19 @@ var RefreshIndicator =
 	        width: this.props.size,
 	        height: this.props.size,
 	        padding: padding,
-	        top: this.props.top,
-	        left: this.props.left,
+	        transform: 'translate3d(' + (1000 + this.props.left) + 'px, ' + (1000 + this.props.top) + 'px, 0)',
 	        opacity: this.props.status === 'hide' ? 0 : 1
 	      }, this.prefixed('transition'), this.props.status === 'hide' ? 'all .3s ease-out' : 'none');
 	    }
 	  }, {
 	    key: '_getCircleStyle',
-	    value: function _getCircleStyle(paperSize) {
+	    value: function _getCircleStyle() {
 	      var isLoading = this.props.status === 'loading';
 	      var p1 = isLoading ? 1 : this._getFactor();
-	      var radius = this._getRadius(paperSize);
-	      var stroke = Math.max(3, this.props.size * 4 / 80);
-	      var originX = paperSize / 2;
-	      var originY = paperSize / 2;
+	      var radius = this._getRadius();
+	      var stroke = Math.max(3, 2);
+	      var originX = VIEWBOX_SIZE / 2;
+	      var originY = VIEWBOX_SIZE / 2;
 	      var perimeter = Math.PI * 2 * radius;
 
 	      var _getArcDeg2 = this._getArcDeg();
@@ -252,15 +238,15 @@ var RefreshIndicator =
 	    }
 	  }, {
 	    key: '_getPolygonStyle',
-	    value: function _getPolygonStyle(paperSize) {
+	    value: function _getPolygonStyle() {
 	      var _style;
 
 	      var p1 = this._getFactor();
-	      var radius = this._getRadius(paperSize);
+	      var radius = this._getRadius();
 
-	      var circleStroke = Math.max(3, this.props.size * 4 / 80);
-	      var originX = paperSize / 2;
-	      var originY = paperSize / 2;
+	      var circleStroke = Math.max(3, 40 * 4 / 80);
+	      var originX = VIEWBOX_SIZE / 2;
+	      var originY = VIEWBOX_SIZE / 2;
 
 	      var triangleCx = originX + radius;
 	      var triangleCy = originY;
@@ -281,55 +267,6 @@ var RefreshIndicator =
 	          points: trianglePath
 	        }
 	      };
-	    }
-	  }, {
-	    key: '_scalePath',
-	    value: function _scalePath(path, step) {
-	      if (this.props.status !== 'loading') return;
-
-	      var currStep = (step || 0) % 3;
-
-	      clearTimeout(this._timer1);
-	      this._timer1 = setTimeout(this._scalePath.bind(this, path, currStep + 1), currStep ? 750 : 250);
-
-	      var paperSize = this._getPaperSize();
-	      var radius = this._getRadius(paperSize);
-	      var perimeter = Math.PI * 2 * radius;
-	      var arcLen = perimeter * 0.64;
-
-	      if (currStep === 0) {
-	        path.style.strokeDasharray = '1, 200';
-	        path.style.strokeDashoffset = 0;
-	        path.style[this.prefixed('transitionDuration')] = '0ms';
-	      } else if (currStep === 1) {
-	        path.style.strokeDasharray = arcLen + ', 200';
-	        path.style.strokeDashoffset = -15;
-	        path.style[this.prefixed('transitionDuration')] = '750ms';
-	      } else {
-	        path.style.strokeDasharray = arcLen + ',200';
-	        path.style.strokeDashoffset = -(perimeter - 1);
-	        path.style[this.prefixed('transitionDuration')] = '850ms';
-	      }
-	    }
-	  }, {
-	    key: '_rotateWrapper',
-	    value: function _rotateWrapper(wrapper) {
-	      var _this = this;
-
-	      if (this.props.status !== 'loading') return;
-
-	      clearTimeout(this._timer2);
-	      this._timer2 = setTimeout(this._rotateWrapper.bind(this, wrapper), 10050);
-
-	      wrapper.style[this.prefixed('transform')] = null;
-	      wrapper.style[this.prefixed('transform')] = 'rotate(0deg)';
-	      wrapper.style[this.prefixed('transitionDuration')] = '0ms';
-
-	      setTimeout(function () {
-	        wrapper.style[_this.prefixed('transform')] = 'rotate(1800deg)';
-	        wrapper.style[_this.prefixed('transitionDuration')] = '10s';
-	        wrapper.style[_this.prefixed('transitionTimingFunction')] = 'linear';
-	      }, 50);
 	    }
 
 	    /**
@@ -368,45 +305,20 @@ var RefreshIndicator =
 
 	"use strict";
 
-	var _Object$getOwnPropertyDescriptor = __webpack_require__(3)["default"];
+	var _Object$assign = __webpack_require__(3)["default"];
 
-	exports["default"] = function get(_x, _x2, _x3) {
-	  var _again = true;
+	exports["default"] = _Object$assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];
 
-	  _function: while (_again) {
-	    var object = _x,
-	        property = _x2,
-	        receiver = _x3;
-	    desc = parent = getter = undefined;
-	    _again = false;
-	    if (object === null) object = Function.prototype;
-
-	    var desc = _Object$getOwnPropertyDescriptor(object, property);
-
-	    if (desc === undefined) {
-	      var parent = Object.getPrototypeOf(object);
-
-	      if (parent === null) {
-	        return undefined;
-	      } else {
-	        _x = parent;
-	        _x2 = property;
-	        _x3 = receiver;
-	        _again = true;
-	        continue _function;
+	    for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
 	      }
-	    } else if ("value" in desc) {
-	      return desc.value;
-	    } else {
-	      var getter = desc.get;
-
-	      if (getter === undefined) {
-	        return undefined;
-	      }
-
-	      return getter.call(receiver);
 	    }
 	  }
+
+	  return target;
 	};
 
 	exports.__esModule = true;
@@ -421,14 +333,72 @@ var RefreshIndicator =
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(5);
-	__webpack_require__(7);
-	module.exports = function getOwnPropertyDescriptor(it, key){
-	  return $.getDesc(it, key);
-	};
+	__webpack_require__(5);
+	module.exports = __webpack_require__(7).core.Object.assign;
 
 /***/ },
 /* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $def = __webpack_require__(6);
+	$def($def.S, 'Object', {assign: __webpack_require__(9)});
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $          = __webpack_require__(7)
+	  , global     = $.g
+	  , core       = $.core
+	  , isFunction = $.isFunction;
+	function ctx(fn, that){
+	  return function(){
+	    return fn.apply(that, arguments);
+	  };
+	}
+	// type bitmap
+	$def.F = 1;  // forced
+	$def.G = 2;  // global
+	$def.S = 4;  // static
+	$def.P = 8;  // proto
+	$def.B = 16; // bind
+	$def.W = 32; // wrap
+	function $def(type, name, source){
+	  var key, own, out, exp
+	    , isGlobal = type & $def.G
+	    , isProto  = type & $def.P
+	    , target   = isGlobal ? global : type & $def.S
+	        ? global[name] : (global[name] || {}).prototype
+	    , exports  = isGlobal ? core : core[name] || (core[name] = {});
+	  if(isGlobal)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !(type & $def.F) && target && key in target;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    if(isGlobal && !isFunction(target[key]))exp = source[key];
+	    // bind timers to global for call from export context
+	    else if(type & $def.B && own)exp = ctx(out, global);
+	    // wrap global constructors for prevent change them in library
+	    else if(type & $def.W && target[key] == out)!function(C){
+	      exp = function(param){
+	        return this instanceof C ? new C(param) : C(param);
+	      };
+	      exp.prototype = C.prototype;
+	    }(out);
+	    else exp = isProto && isFunction(out) ? ctx(Function.call, out) : out;
+	    // export
+	    exports[key] = exp;
+	    if(isProto)(exports.prototype || (exports.prototype = {}))[key] = out;
+	  }
+	}
+	module.exports = $def;
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -480,7 +450,7 @@ var RefreshIndicator =
 	  return it;
 	}
 
-	var $ = module.exports = __webpack_require__(6)({
+	var $ = module.exports = __webpack_require__(8)({
 	  g: global,
 	  core: core,
 	  html: global.document && document.documentElement,
@@ -529,7 +499,7 @@ var RefreshIndicator =
 	if(typeof __g != 'undefined')__g = global;
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function($){
@@ -539,11 +509,115 @@ var RefreshIndicator =
 	};
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $        = __webpack_require__(5)
-	  , $def     = __webpack_require__(8)
+	var $        = __webpack_require__(7)
+	  , enumKeys = __webpack_require__(10);
+	// 19.1.2.1 Object.assign(target, source, ...)
+	/* eslint-disable no-unused-vars */
+	module.exports = Object.assign || function assign(target, source){
+	/* eslint-enable no-unused-vars */
+	  var T = Object($.assertDefined(target))
+	    , l = arguments.length
+	    , i = 1;
+	  while(l > i){
+	    var S      = $.ES5Object(arguments[i++])
+	      , keys   = enumKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)T[key = keys[j++]] = S[key];
+	  }
+	  return T;
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(7);
+	module.exports = function(it){
+	  var keys       = $.getKeys(it)
+	    , getDesc    = $.getDesc
+	    , getSymbols = $.getSymbols;
+	  if(getSymbols)$.each.call(getSymbols(it), function(key){
+	    if(getDesc(it, key).enumerable)keys.push(key);
+	  });
+	  return keys;
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _Object$getOwnPropertyDescriptor = __webpack_require__(12)["default"];
+
+	exports["default"] = function get(_x, _x2, _x3) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    var object = _x,
+	        property = _x2,
+	        receiver = _x3;
+	    desc = parent = getter = undefined;
+	    _again = false;
+	    if (object === null) object = Function.prototype;
+
+	    var desc = _Object$getOwnPropertyDescriptor(object, property);
+
+	    if (desc === undefined) {
+	      var parent = Object.getPrototypeOf(object);
+
+	      if (parent === null) {
+	        return undefined;
+	      } else {
+	        _x = parent;
+	        _x2 = property;
+	        _x3 = receiver;
+	        _again = true;
+	        continue _function;
+	      }
+	    } else if ("value" in desc) {
+	      return desc.value;
+	    } else {
+	      var getter = desc.get;
+
+	      if (getter === undefined) {
+	        return undefined;
+	      }
+
+	      return getter.call(receiver);
+	    }
+	  }
+	};
+
+	exports.__esModule = true;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(13), __esModule: true };
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $ = __webpack_require__(7);
+	__webpack_require__(14);
+	module.exports = function getOwnPropertyDescriptor(it, key){
+	  return $.getDesc(it, key);
+	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var $        = __webpack_require__(7)
+	  , $def     = __webpack_require__(6)
 	  , isObject = $.isObject
 	  , toObject = $.toObject;
 	$.each.call(('freeze,seal,preventExtensions,isFrozen,isSealed,isExtensible,' +
@@ -570,7 +644,7 @@ var RefreshIndicator =
 	    return fn(Object($.assertDefined(it)));
 	  } : ID == 8 ? function keys(it){
 	    return fn(toObject(it));
-	  } : __webpack_require__(9).get;
+	  } : __webpack_require__(15).get;
 	  try {
 	    fn('z');
 	  } catch(e){
@@ -580,64 +654,11 @@ var RefreshIndicator =
 	});
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $          = __webpack_require__(5)
-	  , global     = $.g
-	  , core       = $.core
-	  , isFunction = $.isFunction;
-	function ctx(fn, that){
-	  return function(){
-	    return fn.apply(that, arguments);
-	  };
-	}
-	// type bitmap
-	$def.F = 1;  // forced
-	$def.G = 2;  // global
-	$def.S = 4;  // static
-	$def.P = 8;  // proto
-	$def.B = 16; // bind
-	$def.W = 32; // wrap
-	function $def(type, name, source){
-	  var key, own, out, exp
-	    , isGlobal = type & $def.G
-	    , isProto  = type & $def.P
-	    , target   = isGlobal ? global : type & $def.S
-	        ? global[name] : (global[name] || {}).prototype
-	    , exports  = isGlobal ? core : core[name] || (core[name] = {});
-	  if(isGlobal)source = name;
-	  for(key in source){
-	    // contains in native
-	    own = !(type & $def.F) && target && key in target;
-	    if(own && key in exports)continue;
-	    // export native or passed
-	    out = own ? target[key] : source[key];
-	    // prevent global pollution for namespaces
-	    if(isGlobal && !isFunction(target[key]))exp = source[key];
-	    // bind timers to global for call from export context
-	    else if(type & $def.B && own)exp = ctx(out, global);
-	    // wrap global constructors for prevent change them in library
-	    else if(type & $def.W && target[key] == out)!function(C){
-	      exp = function(param){
-	        return this instanceof C ? new C(param) : C(param);
-	      };
-	      exp.prototype = C.prototype;
-	    }(out);
-	    else exp = isProto && isFunction(out) ? ctx(Function.call, out) : out;
-	    // export
-	    exports[key] = exp;
-	    if(isProto)(exports.prototype || (exports.prototype = {}))[key] = out;
-	  }
-	}
-	module.exports = $def;
-
-/***/ },
-/* 9 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-	var $ = __webpack_require__(5)
+	var $ = __webpack_require__(7)
 	  , toString = {}.toString
 	  , getNames = $.getNames;
 
@@ -658,14 +679,14 @@ var RefreshIndicator =
 	};
 
 /***/ },
-/* 10 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _Object$create = __webpack_require__(11)["default"];
+	var _Object$create = __webpack_require__(17)["default"];
 
-	var _Object$setPrototypeOf = __webpack_require__(13)["default"];
+	var _Object$setPrototypeOf = __webpack_require__(19)["default"];
 
 	exports["default"] = function (subClass, superClass) {
 	  if (typeof superClass !== "function" && superClass !== null) {
@@ -686,49 +707,49 @@ var RefreshIndicator =
 	exports.__esModule = true;
 
 /***/ },
-/* 11 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(12), __esModule: true };
+	module.exports = { "default": __webpack_require__(18), __esModule: true };
 
 /***/ },
-/* 12 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(5);
+	var $ = __webpack_require__(7);
 	module.exports = function create(P, D){
 	  return $.create(P, D);
 	};
 
 /***/ },
-/* 13 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(14), __esModule: true };
+	module.exports = { "default": __webpack_require__(20), __esModule: true };
 
 /***/ },
-/* 14 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(15);
-	module.exports = __webpack_require__(5).core.Object.setPrototypeOf;
+	__webpack_require__(21);
+	module.exports = __webpack_require__(7).core.Object.setPrototypeOf;
 
 /***/ },
-/* 15 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.3.19 Object.setPrototypeOf(O, proto)
-	var $def = __webpack_require__(8);
-	$def($def.S, 'Object', {setPrototypeOf: __webpack_require__(16).set});
+	var $def = __webpack_require__(6);
+	$def($def.S, 'Object', {setPrototypeOf: __webpack_require__(22).set});
 
 /***/ },
-/* 16 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
 	/* eslint-disable no-proto */
-	var $      = __webpack_require__(5)
-	  , assert = __webpack_require__(17);
+	var $      = __webpack_require__(7)
+	  , assert = __webpack_require__(23);
 	function check(O, proto){
 	  assert.obj(O);
 	  assert(proto === null || $.isObject(proto), proto, ": can't set as prototype!");
@@ -737,7 +758,7 @@ var RefreshIndicator =
 	  set: Object.setPrototypeOf || ('__proto__' in {} // eslint-disable-line
 	    ? function(buggy, set){
 	        try {
-	          set = __webpack_require__(18)(Function.call, $.getDesc(Object.prototype, '__proto__').set, 2);
+	          set = __webpack_require__(24)(Function.call, $.getDesc(Object.prototype, '__proto__').set, 2);
 	          set({}, []);
 	        } catch(e){ buggy = true; }
 	        return function setPrototypeOf(O, proto){
@@ -752,10 +773,10 @@ var RefreshIndicator =
 	};
 
 /***/ },
-/* 17 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(5);
+	var $ = __webpack_require__(7);
 	function assert(condition, msg1, msg2){
 	  if(!condition)throw TypeError(msg2 ? msg1 + msg2 : msg1);
 	}
@@ -775,11 +796,11 @@ var RefreshIndicator =
 	module.exports = assert;
 
 /***/ },
-/* 18 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Optional / simple context binding
-	var assertFunction = __webpack_require__(17).fn;
+	var assertFunction = __webpack_require__(23).fn;
 	module.exports = function(fn, that, length){
 	  assertFunction(fn);
 	  if(~length && that === undefined)return fn;
@@ -799,12 +820,12 @@ var RefreshIndicator =
 	};
 
 /***/ },
-/* 19 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _Object$defineProperty = __webpack_require__(20)["default"];
+	var _Object$defineProperty = __webpack_require__(26)["default"];
 
 	exports["default"] = (function () {
 	  function defineProperties(target, props) {
@@ -828,22 +849,22 @@ var RefreshIndicator =
 	exports.__esModule = true;
 
 /***/ },
-/* 20 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(21), __esModule: true };
+	module.exports = { "default": __webpack_require__(27), __esModule: true };
 
 /***/ },
-/* 21 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(5);
+	var $ = __webpack_require__(7);
 	module.exports = function defineProperty(it, key, desc){
 	  return $.setDesc(it, key, desc);
 	};
 
 /***/ },
-/* 22 */
+/* 28 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -857,12 +878,12 @@ var RefreshIndicator =
 	exports.__esModule = true;
 
 /***/ },
-/* 23 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _Object$defineProperty = __webpack_require__(20)["default"];
+	var _Object$defineProperty = __webpack_require__(26)["default"];
 
 	exports["default"] = function (obj, key, value) {
 	  if (key in obj) {
@@ -880,90 +901,6 @@ var RefreshIndicator =
 	};
 
 	exports.__esModule = true;
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _Object$assign = __webpack_require__(25)["default"];
-
-	exports["default"] = _Object$assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];
-
-	    for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }
-
-	  return target;
-	};
-
-	exports.__esModule = true;
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(26), __esModule: true };
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(27);
-	module.exports = __webpack_require__(5).core.Object.assign;
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.3.1 Object.assign(target, source)
-	var $def = __webpack_require__(8);
-	$def($def.S, 'Object', {assign: __webpack_require__(28)});
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $        = __webpack_require__(5)
-	  , enumKeys = __webpack_require__(29);
-	// 19.1.2.1 Object.assign(target, source, ...)
-	/* eslint-disable no-unused-vars */
-	module.exports = Object.assign || function assign(target, source){
-	/* eslint-enable no-unused-vars */
-	  var T = Object($.assertDefined(target))
-	    , l = arguments.length
-	    , i = 1;
-	  while(l > i){
-	    var S      = $.ES5Object(arguments[i++])
-	      , keys   = enumKeys(S)
-	      , length = keys.length
-	      , j      = 0
-	      , key;
-	    while(length > j)T[key = keys[j++]] = S[key];
-	  }
-	  return T;
-	};
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(5);
-	module.exports = function(it){
-	  var keys       = $.getKeys(it)
-	    , getDesc    = $.getDesc
-	    , getSymbols = $.getSymbols;
-	  if(getSymbols)$.each.call(getSymbols(it), function(key){
-	    if(getDesc(it, key).enumerable)keys.push(key);
-	  });
-	  return keys;
-	};
 
 /***/ },
 /* 30 */
@@ -1028,14 +965,14 @@ var RefreshIndicator =
 	__webpack_require__(33);
 	__webpack_require__(43);
 	__webpack_require__(45);
-	module.exports = __webpack_require__(5).core.getIterator;
+	module.exports = __webpack_require__(7).core.getIterator;
 
 /***/ },
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(34);
-	var $           = __webpack_require__(5)
+	var $           = __webpack_require__(7)
 	  , Iterators   = __webpack_require__(37).Iterators
 	  , ITERATOR    = __webpack_require__(39)('iterator')
 	  , ArrayValues = Iterators.Array
@@ -1053,7 +990,7 @@ var RefreshIndicator =
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $          = __webpack_require__(5)
+	var $          = __webpack_require__(7)
 	  , setUnscope = __webpack_require__(35)
 	  , ITER       = __webpack_require__(36).safe('iter')
 	  , $iter      = __webpack_require__(37)
@@ -1102,7 +1039,7 @@ var RefreshIndicator =
 	function uid(key){
 	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++sid + Math.random()).toString(36));
 	}
-	uid.safe = __webpack_require__(5).g.Symbol || uid;
+	uid.safe = __webpack_require__(7).g.Symbol || uid;
 	module.exports = uid;
 
 /***/ },
@@ -1110,10 +1047,10 @@ var RefreshIndicator =
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var $                 = __webpack_require__(5)
+	var $                 = __webpack_require__(7)
 	  , cof               = __webpack_require__(38)
 	  , classof           = cof.classof
-	  , assert            = __webpack_require__(17)
+	  , assert            = __webpack_require__(23)
 	  , assertObject      = assert.obj
 	  , SYMBOL_ITERATOR   = __webpack_require__(39)('iterator')
 	  , FF_ITERATOR       = '@@iterator'
@@ -1163,7 +1100,7 @@ var RefreshIndicator =
 /* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $        = __webpack_require__(5)
+	var $        = __webpack_require__(7)
 	  , TAG      = __webpack_require__(39)('toStringTag')
 	  , toString = {}.toString;
 	function cof(it){
@@ -1183,7 +1120,7 @@ var RefreshIndicator =
 /* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global = __webpack_require__(5).g
+	var global = __webpack_require__(7).g
 	  , store  = __webpack_require__(40)('wks');
 	module.exports = function(name){
 	  return store[name] || (store[name] =
@@ -1194,7 +1131,7 @@ var RefreshIndicator =
 /* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $      = __webpack_require__(5)
+	var $      = __webpack_require__(7)
 	  , SHARED = '__core-js_shared__'
 	  , store  = $.g[SHARED] || ($.g[SHARED] = {});
 	module.exports = function(key){
@@ -1205,9 +1142,9 @@ var RefreshIndicator =
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var $def            = __webpack_require__(8)
+	var $def            = __webpack_require__(6)
 	  , $redef          = __webpack_require__(42)
-	  , $               = __webpack_require__(5)
+	  , $               = __webpack_require__(7)
 	  , cof             = __webpack_require__(38)
 	  , $iter           = __webpack_require__(37)
 	  , SYMBOL_ITERATOR = __webpack_require__(39)('iterator')
@@ -1260,13 +1197,13 @@ var RefreshIndicator =
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(5).hide;
+	module.exports = __webpack_require__(7).hide;
 
 /***/ },
 /* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var set   = __webpack_require__(5).set
+	var set   = __webpack_require__(7).set
 	  , $at   = __webpack_require__(44)(true)
 	  , ITER  = __webpack_require__(36).safe('iter')
 	  , $iter = __webpack_require__(37)
@@ -1293,7 +1230,7 @@ var RefreshIndicator =
 
 	// true  -> String#at
 	// false -> String#codePointAt
-	var $ = __webpack_require__(5);
+	var $ = __webpack_require__(7);
 	module.exports = function(TO_STRING){
 	  return function(that, pos){
 	    var s = String($.assertDefined(that))
@@ -1313,7 +1250,7 @@ var RefreshIndicator =
 /* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var core  = __webpack_require__(5).core
+	var core  = __webpack_require__(7).core
 	  , $iter = __webpack_require__(37);
 	core.isIterable  = $iter.is;
 	core.getIterator = $iter.get;
@@ -1331,7 +1268,7 @@ var RefreshIndicator =
 	__webpack_require__(33);
 	__webpack_require__(43);
 	__webpack_require__(45);
-	module.exports = __webpack_require__(5).core.isIterable;
+	module.exports = __webpack_require__(7).core.isIterable;
 
 /***/ },
 /* 48 */
@@ -1388,7 +1325,7 @@ var RefreshIndicator =
 
 
 	// module
-	exports.push([module.id, ".refresh-indicator {\n  position: absolute;\n  z-index: 2;\n  background-color: white;\n  border-radius: 50%;\n  -webkit-box-shadow: -1px 1px 5px 0 rgba(0, 0, 0, 0.25);\n          box-shadow: -1px 1px 5px 0 rgba(0, 0, 0, 0.25);\n  -webkit-box-sizing: border-box;\n     -moz-box-sizing: border-box;\n          box-sizing: border-box;\n}\n", ""]);
+	exports.push([module.id, ".refresh-indicator {\n  position: absolute;\n  top: -1000px;\n  left: -1000px;\n  z-index: 2;\n  background-color: white;\n  border-radius: 50%;\n  -webkit-box-shadow: -1px 1px 5px 0 rgba(0, 0, 0, 0.25);\n          box-shadow: -1px 1px 5px 0 rgba(0, 0, 0, 0.25);\n  -webkit-box-sizing: border-box;\n     -moz-box-sizing: border-box;\n          box-sizing: border-box;\n}\n@-webkit-keyframes circle-scale {\n  0% {\n    stroke-dasharray: 1, 200;\n    stroke-dashoffset: 0;\n  }\n  46.875% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -15;\n  }\n  100% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -68;\n  }\n}\n@-o-keyframes circle-scale {\n  0% {\n    stroke-dasharray: 1, 200;\n    stroke-dashoffset: 0;\n  }\n  46.875% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -15;\n  }\n  100% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -68;\n  }\n}\n@keyframes circle-scale {\n  0% {\n    stroke-dasharray: 1, 200;\n    stroke-dashoffset: 0;\n  }\n  46.875% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -15;\n  }\n  100% {\n    stroke-dasharray: 44, 200;\n    stroke-dashoffset: -68;\n  }\n}\n@-webkit-keyframes rotate-div {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@-o-keyframes rotate-div {\n  0% {\n    -o-transform: rotate(0deg);\n       transform: rotate(0deg);\n  }\n  100% {\n    -o-transform: rotate(360deg);\n       transform: rotate(360deg);\n  }\n}\n@keyframes rotate-div {\n  0% {\n    -webkit-transform: rotate(0deg);\n         -o-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n         -o-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.loading-div {\n  width: 100%;\n  height: 100%;\n}\n.loading-div .circle-anim {\n  -webkit-animation-duration: 1600ms;\n       -o-animation-duration: 1600ms;\n          animation-duration: 1600ms;\n  -webkit-animation-iteration-count: infinite;\n       -o-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  -webkit-animation-name: circle-scale;\n       -o-animation-name: circle-scale;\n          animation-name: circle-scale;\n  -webkit-animation-timing-function: linear;\n       -o-animation-timing-function: linear;\n          animation-timing-function: linear;\n}\n.anim {\n  -webkit-animation-duration: 2s;\n       -o-animation-duration: 2s;\n          animation-duration: 2s;\n  -webkit-animation-iteration-count: infinite;\n       -o-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  -webkit-animation-name: rotate-div;\n       -o-animation-name: rotate-div;\n          animation-name: rotate-div;\n  -webkit-animation-timing-function: linear;\n       -o-animation-timing-function: linear;\n          animation-timing-function: linear;\n}\n", ""]);
 
 	// exports
 
