@@ -5,7 +5,7 @@ var Sample2 = React.createClass({
     return {
       indicatorPercentage: 0,
       indicatorY: -this._indicatorSize,
-      indicatorStatus: "ready",
+      indicatorStatus: "hide",
     };
   },
   render: function () {

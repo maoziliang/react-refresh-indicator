@@ -29,7 +29,7 @@ RefreshIndicator.propsType = {
   left: React.PropTypes.number.isRequired,
   top: React.PropTypes.number.isRequired,
   // status is an enum. It can be "ready" "loading" or "hide"
-  // ready: This phase give user a change to confirm to fetch data. Display upon the percentage prop.
+  // ready: This phase give user a chance to confirm to fetch data. Display upon the percentage prop.
   // loading: This means data fetch has began. Display a spinning animated arc.
   // hide: Finished and hide to specified left and top with animation.
   status: React.PropTypes.oneOf(["ready", "loading", "hide"]).isRequired,

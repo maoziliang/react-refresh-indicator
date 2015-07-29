@@ -139,7 +139,6 @@ class RefreshIndicator extends React.Component {
   }
 
   _getPolygonStyle() {
-    const paperSize = 32;
     const p1 = this._getFactor();
     const radius = this._getRadius();
 
