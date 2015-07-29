@@ -22,8 +22,8 @@ class RefreshIndicator extends React.Component {
     if (this.props.status !== 'ready') {
       const circleStyle = this._getCircleStyle(paperSize);
       childrenCmp = (
-        <div className={ this.props.status === "loading" ? "loading-div-anim" : null }
-          ref="wrapper" 
+        <div className={ this.props.status === 'loading' ? 'loading-div-anim' : null }
+          ref="wrapper"
           style={{
             transition: 'transform 20s linear',
             width: '100%',
@@ -35,7 +35,7 @@ class RefreshIndicator extends React.Component {
               height: paperSize,
             }}
           >
-            <circle className={ this.props.status === "loading" ? "circle-anim" : null }
+            <circle className={ this.props.status === 'loading' ? 'circle-anim' : null }
               ref="path"
               style={circleStyle.style}
               {...circleStyle.attr}
